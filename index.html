@@ -271,6 +271,14 @@ section{position:relative}
 .f input,.f textarea{font:500 15px var(--body);color:var(--ink);padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--white);transition:border-color .2s,box-shadow .2s;width:100%}
 .f textarea{resize:vertical;min-height:96px}
 .f input:focus,.f textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(34,136,201,.15)}
+.f .req{color:var(--blue)}
+.sel{position:relative}
+.sel::after{content:"";position:absolute;right:18px;top:50%;width:9px;height:9px;margin-top:-7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);pointer-events:none;transition:transform .25s,border-color .25s}
+.sel:focus-within::after{border-color:var(--blue);transform:rotate(225deg);margin-top:-2px}
+.f select{appearance:none;-webkit-appearance:none;font:500 15px var(--body);color:var(--ink);padding:14px 44px 14px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--white);width:100%;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.f select:invalid{color:#8a9aa8}
+.f select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(34,136,201,.15)}
+.f select option{color:var(--ink)}
 .form .btn{width:100%;justify-content:center;margin-top:18px;border:0;cursor:pointer;font-family:var(--body)}
 .form-note{font-size:12.5px;color:var(--muted);margin-top:12px;text-align:center}
 .sent{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:40px 10px}
@@ -681,6 +689,15 @@ footer{background:var(--ink-deep);color:var(--muted-dk)}
           <div class="f"><label for="fn">Name</label><input id="fn" name="name" autocomplete="name" placeholder="Your full name" required></div>
           <div class="f"><label for="fp">Phone</label><input id="fp" name="phone" type="tel" autocomplete="tel" placeholder="(661) 555-0123" required></div>
           <div class="f full"><label for="fe">Email</label><input id="fe" name="email" type="email" autocomplete="email" placeholder="you@email.com"></div>
+          <div class="f full"><label for="fa">Street address</label><input id="fa" name="address" autocomplete="street-address" placeholder="Enter your full address"></div>
+          <div class="f full"><label for="ft">How soon would you like to start? <span class="req">*</span></label>
+            <div class="sel"><select id="ft" name="timeline" required>
+              <option value="" selected disabled>Select an option</option>
+              <option>As soon as possible</option>
+              <option>Within 30 days</option>
+              <option>1–3 months</option>
+            </select></div>
+          </div>
           <div class="f full"><label for="fm">Message</label><textarea id="fm" name="message" placeholder="Tell us about your home, bill or system"></textarea></div>
         </div>
         <button class="btn btn-primary" type="submit">Request My Free Review <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -916,6 +933,7 @@ footer{background:var(--ink-deep);color:var(--muted-dk)}
     e.preventDefault();
     var n=document.getElementById('fn'),p=document.getElementById('fp'),note=document.getElementById('formNote');
     if(!n.value.trim()||!p.value.trim()){note.textContent='Add your name and phone so we can reach you.';note.style.color='#2288C9';(n.value.trim()?p:n).focus();return}
+    var tl=document.getElementById('ft');if(!tl.value){note.textContent='Choose how soon you would like to start.';note.style.color='#2288C9';tl.focus();return}
     document.getElementById('formBody').hidden=true;document.getElementById('sent').hidden=false;
   });
 
